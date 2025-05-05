@@ -3,9 +3,7 @@ import AppSidebar from '@/components/AppSidebar.vue'
 import {useUser} from "@/stores/user.ts";
 import {useRouter} from "vue-router";
 import { ref, onMounted, onUnmounted } from 'vue'
-
 const userStore = useUser();
-
 import {
   SidebarInset,
   SidebarProvider,
@@ -64,7 +62,7 @@ onUnmounted(() => {
           </nav>
         </header>
         <div class="flex flex-1 flex-col gap-4 p-4">
-          <slot/>
+          <router-view />
         </div>
       </SidebarInset>
     </SidebarProvider>

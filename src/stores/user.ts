@@ -1,6 +1,7 @@
+import Cookies from "js-cookie";
 import { defineStore } from 'pinia';
 import Api from '../services/api';
-import Cookies from 'js-cookie';
+
 
 type Credentials = {
     email: string;
@@ -22,14 +23,20 @@ export const useUser = defineStore('user', {
     },
     actions: {
         async login(credentials: Credentials) {
-            await Api.post('/api/login',credentials)
-                .then((response) => {
-                  this.user=response.data.data.user;
-                  this.token=response.data.data.token;
 
-                  Cookies.set('token', response.data.data.token);
-                  Cookies.set('user', JSON.stringify(response.data.data.user));
-                });
+            try {
+                const response = await Api.post('/api/login', credentials);
+                this.user = response.data.data.user;
+                this.token = response.data.data.token;
+
+
+                Cookies.set('token', response.data.data.token);
+                Cookies.set('user', JSON.stringify(response.data.data.user));
+            } catch (error) {
+                throw error;
+            }
+
+
         },
         async logout(){
             this.user=null;

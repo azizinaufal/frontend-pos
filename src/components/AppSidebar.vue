@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import {useRoute} from "vue-router";
 import {
   Sidebar,
   SidebarContent,
@@ -15,6 +16,13 @@ import {
 
 import { GalleryVerticalEnd } from 'lucide-vue-next'
 
+const route = useRoute();
+const isActive = (path:string) => {
+  if (Array.isArray(path)) {
+    return route.path.startsWith(path);
+  }
+  return route.path.startsWith(path);
+};
 const props = withDefaults(defineProps<SidebarProps>(), {
   variant: 'sidebar',
 })
@@ -23,59 +31,59 @@ const props = withDefaults(defineProps<SidebarProps>(), {
 const data = {
   navMain: [
     {
-      title: 'HOME',
-      url: '#',
+      title: 'DASHBOARD',
+      url: '/dashboard',
       items: [
 
       ],
     },
     {
       title: 'MASTERS',
-      url: '#',
+      url: '/masters',
       items: [
         {
           title: 'Categories',
-          url: '#',
+          url: '/categories',
         },
         {
           title: 'Products',
-          url: '#',
+          url: '/products',
           isActive: true,
         },
       ],
     },
     {
       title: 'CUSTOMERS',
-      url: '#',
+      url: '/customers',
       items: [
 
       ],
     },
     {
       title: 'TRANSACTIOS',
-      url: '#',
+      url: '/transactions',
       items: [
 
       ],
     },
     {
       title: 'REPORTS',
-      url: '#',
+      url: '/reports',
       items: [
         {
           title: 'Sales',
-          url: '#',
+          url: '/sales',
         },
         {
           title: 'Profits',
-          url: '#',
+          url: '/profits',
         },
       ],
 
     },
     {
       title: 'USERS',
-      url: '#',
+      url: '/users',
       items: [
 
       ],
@@ -85,15 +93,7 @@ const data = {
 }
 </script>
 <script lang="ts">
-// import { useRouter, useRoute } from "vue-router";
-// const router = useRouter();
-// const route = useRoute();
-// const isActive = (path) => {
-//   if (Array.isArray(path)) {
-//     return path.some((p) => route.path.startsWith(p));
-//   }
-//   return route.path.startsWith(path);
-// };
+
 </script>
 
 <template>
@@ -102,7 +102,7 @@ const data = {
       <SidebarMenu>
         <SidebarMenuItem>
           <SidebarMenuButton size="lg" as-child>
-            <a href="#">
+            <RouterLink to="/home">
               <div class="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
                 <GalleryVerticalEnd class="size-4" />
               </div>
@@ -110,7 +110,7 @@ const data = {
                 <span class="font-medium">Point of Sales Kasir.in by</span>
                 <span class="">Naufal Azizi</span>
               </div>
-            </a>
+            </RouterLink>
           </SidebarMenuButton>
         </SidebarMenuItem>
       </SidebarMenu>
@@ -118,16 +118,14 @@ const data = {
     <SidebarContent>
       <SidebarGroup>
         <SidebarMenu class="gap-2 font">
-          <SidebarMenuItem v-for="item in data.navMain" :key="item.title" class="font-medium">
-            <SidebarMenuButton as-child>
-              <a :href="item.url" class="font-bold ">
-                {{ item.title }}
-              </a>
+          <SidebarMenuItem v-for="item in data.navMain" :key="item.title" >
+            <SidebarMenuButton as-child :is-active="isActive(item.url)">
+              <RouterLink :to="item.url" class="font-bold">{{item.title}} </RouterLink>
             </SidebarMenuButton>
             <SidebarMenuSub v-if="item.items.length" class="ml-0 border-l-0 px-1.5">
               <SidebarMenuSubItem v-for="childItem in item.items" :key="childItem.title">
-                <SidebarMenuSubButton as-child :is-active="childItem.isActive">
-                  <a :href="childItem.url">{{ childItem.title }}</a>
+                <SidebarMenuSubButton as-child :is-active="isActive(childItem.url)">
+                 <RouterLink :to="childItem.url" class="font-medium">{{childItem.title}}</RouterLink>
                 </SidebarMenuSubButton>
               </SidebarMenuSubItem>
             </SidebarMenuSub>

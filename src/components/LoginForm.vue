@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useUser } from '@/stores/user';
+import { handleErrors } from "@/utils/handleErrors";
 import type { HTMLAttributes } from 'vue'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
@@ -11,37 +15,28 @@ const props = defineProps<{
   class?: HTMLAttributes['class']
 }>()
 
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-import { useUser } from '@/stores/user';
-import { handleErrors } from "@/utils/handleErrors";
+
 const router = useRouter();
 const userStore = useUser();
 const email = ref("");
 const password = ref("");
 const errors = ref<{ email?: string; password?: string }>({});
-
 const loginFailed = ref('');
 
 
 
 const loginHandler = async () => {
   try {
+ await userStore.login({ email: email.value, password: password.value })
+    await router.push("/dashboard");
 
-
-    await userStore.login({ email: email.value, password: password.value });
-
-
-    router.push('/dashboard');
 
   } catch (error) {
-
-
+    console.log("error client:",error)
     if (error.response?.data?.message) {
       loginFailed.value = error.response.data.message;
       return;
     }
-
 
     handleErrors(error.response?.data, errors);
   }
@@ -70,13 +65,7 @@ const loginHandler = async () => {
                   </div>
                   <div class="grid gap-3">
                     <Label for="email">Email</Label>
-                    <Input
-                        v-model="email"
-                        id="email"
-                        type="email"
-                        placeholder="m@example.com"
-
-                    />
+                    <Input v-model="email" id="email" type="email" placeholder="m@example.com"/>
                     <div v-if="errors.email" class="text-red-600 text-sm mt-1">
                       {{ errors.email }}
                     </div>
@@ -84,19 +73,14 @@ const loginHandler = async () => {
                   <div class="grid gap-3">
                     <div class="flex items-center">
                       <Label for="password">Password</Label>
-                      <a
-                          href="#"
-                          class="ml-auto text-sm underline-offset-2 hover:underline"
-                      >
-                        Forgot your password?
-                      </a>
+                      <a href="#" class="ml-auto text-sm underline-offset-2 hover:underline">Forgot your password?</a>
                     </div>
                     <Input id="password" type="password" v-model="password" />
                     <div v-if="errors.password" class="text-red-600 text-sm mt-1">
                       {{ errors.password }}
                     </div>
                   </div>
-                  <Button type="submit" class="w-full">
+                  <Button type="submit" class="w-full cursor-pointer">
                     Login
                   </Button>
                   <div class="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
