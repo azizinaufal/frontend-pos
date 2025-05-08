@@ -28,7 +28,7 @@ const loginFailed = ref('');
 const loginHandler = async () => {
   try {
  await userStore.login({ email: email.value, password: password.value })
-    await router.push("/dashboard");
+    router.push("/dashboard");
 
 
   } catch (error) {

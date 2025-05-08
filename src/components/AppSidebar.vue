@@ -1,6 +1,18 @@
 <script setup lang="ts">
 import {useRoute} from "vue-router";
 import {
+  LayoutDashboard,
+  KeyRound,
+  ChartBarStacked,
+  UserRound,
+  PackageSearch,
+  BanknoteArrowUp,
+  ClipboardPlus,
+  BadgeDollarSign,
+  BadgePercent,
+  UserRoundPen
+} from "lucide-vue-next";
+import {
   Sidebar,
   SidebarContent,
   SidebarGroup,
@@ -31,6 +43,7 @@ const props = withDefaults(defineProps<SidebarProps>(), {
 const data = {
   navMain: [
     {
+      icon: LayoutDashboard,
       title: 'DASHBOARD',
       url: '/dashboard',
       items: [
@@ -38,14 +51,17 @@ const data = {
       ],
     },
     {
+      icon: KeyRound,
       title: 'MASTERS',
       url: '/masters',
       items: [
         {
+          icon: ChartBarStacked,
           title: 'Categories',
           url: '/categories',
         },
         {
+          icon: PackageSearch,
           title: 'Products',
           url: '/products',
           isActive: true,
@@ -53,6 +69,7 @@ const data = {
       ],
     },
     {
+      icon: UserRound ,
       title: 'CUSTOMERS',
       url: '/customers',
       items: [
@@ -60,6 +77,7 @@ const data = {
       ],
     },
     {
+      icon: BanknoteArrowUp,
       title: 'TRANSACTIOS',
       url: '/transactions',
       items: [
@@ -67,21 +85,24 @@ const data = {
       ],
     },
     {
+      icon: ClipboardPlus,
       title: 'REPORTS',
       url: '/reports',
       items: [
         {
+          icon: BadgeDollarSign,
           title: 'Sales',
           url: '/sales',
         },
         {
+          icon: BadgePercent,
           title: 'Profits',
           url: '/profits',
         },
       ],
 
     },
-    {
+    {icon: UserRoundPen,
       title: 'USERS',
       url: '/users',
       items: [
@@ -120,12 +141,15 @@ const data = {
         <SidebarMenu class="gap-2 font">
           <SidebarMenuItem v-for="item in data.navMain" :key="item.title" >
             <SidebarMenuButton as-child :is-active="isActive(item.url)">
-              <RouterLink :to="item.url" class="font-bold">{{item.title}} </RouterLink>
+              <RouterLink :to="item.url" class="flex items-center justify-between font-bold">{{item.title}}<component :is="item.icon" class="size-4" /> </RouterLink>
             </SidebarMenuButton>
-            <SidebarMenuSub v-if="item.items.length" class="ml-0 border-l-0 px-1.5">
+            <SidebarMenuSub v-if="item.items.length" class="ml-0 border-l-0 ">
               <SidebarMenuSubItem v-for="childItem in item.items" :key="childItem.title">
                 <SidebarMenuSubButton as-child :is-active="isActive(childItem.url)">
-                 <RouterLink :to="childItem.url" class="font-medium">{{childItem.title}}</RouterLink>
+                 <RouterLink :to="childItem.url" class="flex items-center justify-between w-full font-medium">
+                   <span>{{childItem.title}}</span>
+                   <component :is="childItem.icon" class="size-4" />
+                 </RouterLink>
                 </SidebarMenuSubButton>
               </SidebarMenuSubItem>
             </SidebarMenuSub>

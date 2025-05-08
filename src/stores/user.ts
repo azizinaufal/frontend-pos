@@ -17,6 +17,7 @@ type User = {
 export const useUser = defineStore('user', {
     state:()=>{
         return{
+
             user: (Cookies.get('user')?JSON.parse(Cookies.get('user')as string):{}) as User | null,
             token:Cookies.get('token') || ''
         }
@@ -30,7 +31,8 @@ export const useUser = defineStore('user', {
                 this.token = response.data.data.token;
 
 
-                Cookies.set('token', response.data.data.token);
+                Cookies.set('token', 'Bearer ' + response.data.data.token);
+
                 Cookies.set('user', JSON.stringify(response.data.data.user));
             } catch (error) {
                 throw error;

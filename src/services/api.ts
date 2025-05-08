@@ -19,7 +19,7 @@ Api.interceptors.response.use(function (response) {
         Cookies.remove('token');
 
 
-        window.location.href = '/';
+         window.location.href = '/';
     } else {
 
 
