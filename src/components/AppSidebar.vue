@@ -141,14 +141,14 @@ const data = {
         <SidebarMenu class="gap-2 font">
           <SidebarMenuItem v-for="item in data.navMain" :key="item.title" >
             <SidebarMenuButton as-child :is-active="isActive(item.url)">
-              <RouterLink :to="item.url" class="flex items-center justify-between font-bold">{{item.title}}<component :is="item.icon" class="size-4" /> </RouterLink>
+              <RouterLink :to="item.url" class=" font-bold"><component :is="item.icon" class="size-4" /> {{item.title}}</RouterLink>
             </SidebarMenuButton>
             <SidebarMenuSub v-if="item.items.length" class="ml-0 border-l-0 ">
               <SidebarMenuSubItem v-for="childItem in item.items" :key="childItem.title">
                 <SidebarMenuSubButton as-child :is-active="isActive(childItem.url)">
-                 <RouterLink :to="childItem.url" class="flex items-center justify-between w-full font-medium">
-                   <span>{{childItem.title}}</span>
+                 <RouterLink :to="childItem.url" class="font-medium">
                    <component :is="childItem.icon" class="size-4" />
+                   <span>{{childItem.title}}</span>
                  </RouterLink>
                 </SidebarMenuSubButton>
               </SidebarMenuSubItem>

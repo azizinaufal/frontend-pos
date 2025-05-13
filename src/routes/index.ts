@@ -3,6 +3,7 @@ import {useUser} from "../stores/user.ts";
 import Login from '@/views/auth/Login.vue'
 import Dashboard from '@/views/dashboard/DashboardLayout.vue';
 import Index from '@/views/dashboard/Index.vue';
+import Categories from '@/views/categories/Categories.vue';
 
 const routes =[
     {
@@ -25,6 +26,11 @@ const routes =[
                 path:'',
                 name:'dashboard.index',
                 component:Index,
+            },
+            {
+                path:'/categories',
+                name:'categories.index',
+                component:Categories,
             },
         ],
 

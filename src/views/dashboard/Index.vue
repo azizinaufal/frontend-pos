@@ -239,7 +239,8 @@ onMounted(() => {
         <div class="flex flex-col">
           <h4 class="mb-0 font-bold">{{ product.title }}</h4>
           <hr class="mb-1 mt-1" />
-          <p class="text-red-600 mb-0">Stock: {{ product.stock }}</p>
+          <p class="text-red-600 text-xs mb-0">Stock: {{ product.stock }}</p>
+          <p class="text-red-600 text-xs">Peringatan: {{product.warning}}</p>
         </div>
       </div>
     </div>
