@@ -70,7 +70,7 @@ const props = defineProps({
 </script>
 
 <template>
-<Dialog v-model:open="modalRef">
+<Dialog >
   <DialogTrigger  class="cursor-pointer bg-blue-600 rounded-md h-8 text-white mr-2 px-2 hover:bg-sky-700">
     Tambah
   </DialogTrigger>
