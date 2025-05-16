@@ -53,7 +53,7 @@ const data = {
     {
       icon: KeyRound,
       title: 'MASTERS',
-      url: '/masters',
+      url: '#',
       items: [
         {
           icon: ChartBarStacked,
@@ -87,7 +87,7 @@ const data = {
     {
       icon: ClipboardPlus,
       title: 'REPORTS',
-      url: '/reports',
+      url: '#',
       items: [
         {
           icon: BadgeDollarSign,
@@ -103,7 +103,7 @@ const data = {
 
     },
     {icon: UserRoundPen,
-      title: 'USERS',
+      title: 'PROFIL',
       url: '/users',
       items: [
 

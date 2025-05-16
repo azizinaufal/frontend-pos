@@ -3,7 +3,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import CreateCategory from './Create.vue';
 import EditCategory from './Edit.vue';
-import DeleteButton from './Delete.vue';
+import DeleteButton from '../components/Delete.vue';
 import {
   Table,
   TableBody,

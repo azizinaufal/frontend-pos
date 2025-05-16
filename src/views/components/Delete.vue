@@ -7,7 +7,7 @@ import {toast} from 'vue3-toastify';
 import "vue3-toastify/dist/index.css";
 import Cookies from 'js-cookie';
 import {
-  Dialog,
+  Dialog, DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -47,14 +47,18 @@ const deleteCategory = async () => {
 
         <DialogHeader>
           <DialogTitle>Hapus Data?</DialogTitle>
-          <DialogDescription>Apakah Anda yakin menghapus data kategori?</DialogDescription>
-          <DialogDescription>Langkah ini tidak dapat dibatalkan</DialogDescription>
+          <div class="flex flex-col justify-between items-center font-medium my-6">
+            <DialogDescription>Apakah Anda yakin menghapus data ini?</DialogDescription>
+            <DialogDescription>Langkah ini tidak dapat dibatalkan</DialogDescription>
+          </div>
             <div class="mb-4">
           </div>
         </DialogHeader>
         <DialogFooter>
-          <a href="#" class="bg-white rounded-md p-2 border-2 hover:bg-gray-200">Batal</a>
-          <button @click="deleteCategory"  class="bg-red-500 rounded-md p-2 text-white cursor-pointer hover:bg-red-800">Hapus</button>
+          <DialogClose as-child>
+            <a href="#" class="bg-white rounded-md p-2 border-2 hover:bg-gray-200">Batal</a>
+            <button @click="deleteCategory"  class="bg-red-500 rounded-md p-2 text-white cursor-pointer hover:bg-red-800">Hapus</button>
+          </DialogClose>
         </DialogFooter>
 
     </DialogContent>

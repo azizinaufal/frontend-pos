@@ -6,7 +6,9 @@ import {getImageUrl} from "@/utils/getImageUrl.ts";
 import {moneyFormat} from "@/utils/moneyFormat.ts";
 import Barcode from '../components/Barcode.vue';
 import CreateProduct from './Create.vue';
+import EditProduct from './Edit.vue';
 import {Input} from "@/components/ui/input";
+import DeleteButton from '@/views/components/Delete.vue';
 
 import {VueAwesomePaginate} from "vue-awesome-paginate";
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
@@ -42,7 +44,9 @@ const fetchData = async (pageNumber = 1,search="") => {
 
 onMounted(() => {
   fetchData();
-})
+});
+
+
 
 const searchHandler = ()=>{
   fetchData(1,keywords.value);
@@ -64,7 +68,7 @@ const handleKeyDown = (e)=>{
     </div>
     <div class="my-8 flex items-center ">
       <CreateProduct :fetch-data="fetchData" />
-      <Input id="search" type="text" placeholder="Cari Kategori" class="pl- 10" v-model="keywords" @keydown="handleKeyDown" />
+      <Input id="search" type="text" placeholder="Cari Produk" class="pl- 10" v-model="keywords" @keydown="handleKeyDown" />
       <Button class="ml-2 bg-blue-600 rounded-md h-8 hover:bg-sky-700" @click="searchHandler">Cari</Button>
     </div>
     <div class="rounded-md border">
@@ -89,7 +93,7 @@ const handleKeyDown = (e)=>{
               <div class="flex items-center py-1">
                 <img :src="getImageUrl(product.image)" :alt="product.name" class="w-10 h-10 rounded-full object-cover mr-3"/>
                 <div>
-                  <p class="font-medium text-gray-900">{{ product.name }}</p>
+                  <p class="font-medium text-gray-900">{{ product.title }}</p>
                 </div>
               </div>
             </TableCell>
@@ -107,8 +111,8 @@ const handleKeyDown = (e)=>{
             </TableCell>
             <TableCell>
               <div class="flex space-x-2">
-
-
+              <EditProduct :fetch-data="fetchData" :productId="product.id" />
+              <DeleteButton :id="product.id" :fetch-data="fetchData" endpoint="/api/products"  />
               </div>
             </TableCell>
           </TableRow>

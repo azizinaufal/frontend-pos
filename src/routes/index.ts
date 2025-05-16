@@ -5,6 +5,7 @@ import Dashboard from '@/views/dashboard/DashboardLayout.vue';
 import Index from '@/views/dashboard/Index.vue';
 import Categories from '@/views/categories/Categories.vue';
 import Products from '@/views/products/Product.vue';
+import Customers from '@/views/customers/Customer.vue';
 
 const routes =[
     {
@@ -37,6 +38,11 @@ const routes =[
                 path:'/products',
                 name:'products.index',
                 component:Products,
+            },
+            {
+                path:'/customers',
+                name:'customer.index',
+                component:Customers,
             },
         ],
 
