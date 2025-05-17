@@ -174,7 +174,7 @@ const updateProduct = async () => {
               <label for="stock" class="text-right">
                 Stok
               </label>
-              <input id="stock" placeholder="Masukan Nama Produk" v-model="stock" class="bg-white shadow-sm border border-b-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-b-blue-500 block w-full p-2.5" />
+              <input id="stock" placeholder="Masukan Stock" v-model="stock" class="bg-white shadow-sm border border-b-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-b-blue-500 block w-full p-2.5" />
               <div v-if="errors.stock" class="mt-2 text-sm text-red-600">
                 {{ errors.stock }}
               </div>
