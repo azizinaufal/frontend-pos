@@ -32,6 +32,7 @@ const fileInputRef = ref(null);
 const modalRef = ref(false);
 const token = Cookies.get('token');
 
+
 const fetchCategories = async () => {
   try {
     Api.defaults.headers.common['Authorization'] = token;
@@ -53,6 +54,18 @@ const handleFileChange = (e)=>{
     toast("Format file tidak didukung",{
       type: "error",
       dangerouslyHTMLString:true
+    });
+    return;
+  }
+
+  const MAX_FILE_SIZE = 5 * 1024 * 1024;
+
+  if (imageData.size > MAX_FILE_SIZE) {
+    fileInputRef.value.value = "";
+    image.value = "";
+    toast("Ukuran file terlalu besar. Maksimum 5MB.", {
+      type: "error",
+      dangerouslyHTMLString: true
     });
     return;
   }
@@ -114,6 +127,7 @@ const storeProduct = async () => {
                   file:rounded-md file:border-0 file:text-sm file:font-semibold
                   file:bg-blue-600 file:text-white hover:file:bg-sky-400
                    border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+              <p>Pastikan file tidak lebih dari 5MB</p>
                <div v-if="errors.images" class="mt-2 text-sm text-red-600">
                   {{ errors.image }}
                </div>

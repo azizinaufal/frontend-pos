@@ -123,7 +123,7 @@ const data = {
       <SidebarMenu>
         <SidebarMenuItem>
           <SidebarMenuButton size="lg" as-child>
-            <RouterLink to="/home">
+            <RouterLink to="/">
               <div class="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
                 <GalleryVerticalEnd class="size-4" />
               </div>

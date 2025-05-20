@@ -36,6 +36,18 @@ const handleFileChange = (e)=>{
     });
     return;
   }
+
+  const MAX_FILE_SIZE = 5 * 1024 * 1024;
+
+  if (imageData.size > MAX_FILE_SIZE) {
+    fileInputRef.value.value = "";
+    image.value = "";
+    toast("Ukuran file terlalu besar. Maksimum 5MB.", {
+      type: "error",
+      dangerouslyHTMLString: true
+    });
+    return;
+  }
   image.value = imageData;
 };
 
