@@ -8,6 +8,9 @@ import Products from '@/views/products/Product.vue';
 import Customers from '@/views/customers/Customer.vue';
 import Profils from '@/views/profil/Profil.vue';
 import Transactions from '@/views/transactions/Transaction.vue';
+import Print from '@/views/transactions/print/Print.vue';
+import Sales from '@/views/sales/Sales.vue';
+import Profits from '@/views/profits/Profits.vue';
 
 const routes =[
     {
@@ -55,6 +58,21 @@ const routes =[
                 path:'/transactions',
                 name:'transaction.index',
                 component:Transactions,
+            },
+            {
+                path:'/transactions/print',
+                name:'transaction.print',
+                component:Print,
+            },
+            {
+                path:'/sales',
+                name:'sales.index',
+                component:Sales,
+            },
+            {
+                path:'/profits',
+                name:'profit.index',
+                component:Profits,
             },
         ],
 

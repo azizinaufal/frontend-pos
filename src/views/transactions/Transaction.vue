@@ -11,6 +11,7 @@ import {Search} from 'lucide-vue-next';
 import Payment from './components/Payment.vue';
 
 
+
 const products = ref([]);
 const barcode = ref("");
 const searchInput = ref(null);
@@ -147,7 +148,7 @@ onMounted(() => {
           <h4 class="text-sm">{{ moneyFormat(totalCarts) }}</h4>
         </div>
       <div class=" flex item-center justify-center ">
-        <Payment/>
+        <Payment :totalCarts="totalCarts" :fetchCarts="fetchCarts"/>
       </div>
     </div>
 

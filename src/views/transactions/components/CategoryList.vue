@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {defineProps, defineEmits} from 'vue';
 import {getImageUrl} from "@/utils/getImageUrl.ts";
+import {LayoutDashboard} from "lucide-vue-next";
 import {useHorizontalScroll} from '@/utils/useHorizontalScroll.ts';
 
 const props = defineProps({
@@ -32,7 +33,7 @@ const { scrollRef, onMouseDown, onMouseLeave, onMouseUp, onMouseMove } = useHori
   <div class="w-full md:w-1/6">
     <a href="#" class="block" @click.prevent="props.fetchProducts">
     <div  class="border bg-white hover:bg-gray-100 shadow-md rounded m-2 p-2 flex flex-col items-center justify-center text-center transition">
-        <img src="/images/categories.png" alt="All Categories" class="w-14 h-14 p-2 mb-2"/>
+       <LayoutDashboard class="w-14 h-14 p-2 mb-2" />
         <h4 class="text-base font-semibold">All</h4>
       </div>
     </a>

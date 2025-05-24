@@ -217,7 +217,7 @@ onMounted(() => {
         <CardDescription>Keuntungan 7 Hari Terakhir</CardDescription>
       </CardHeader>
       <CardContent class="px-0">
-        <div class=" px-6 font-bold">{{ moneyFormat(sumSalesWeek) }}</div>
+        <div class=" px-6 font-bold">{{ moneyFormat(sumProfitsWeek) }}</div>
         <div class="mt-4">
           <VueApexCharts type="bar" height="65"  :options="profitsChartOptions" :series="profitsChartSeries"/>
         </div>

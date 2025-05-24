@@ -5,9 +5,9 @@ import Api from "@/services/api.ts";
 import Cookies from "js-cookie";
 import vSelect from "vue-select";
 import 'vue-select/dist/vue-select.css';
-//import {toast} from 'vue3-toastify';
-// import 'vue3-toastify/dist/index.css';
-// import 'vue-select/dist/vue-select.css';
+import {toast} from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
+
 import {
   Dialog, DialogClose,
   DialogContent,
@@ -23,28 +23,69 @@ const props = defineProps({
 });
 
 const grandTotal = ref(props.totalCarts);
-const cash = ref('');
-const change = ref(0);
-// const discount = ref('');
+const discount = ref<number>(0);
+const cash = ref<number>(0);
+const change = ref<number>(0);
+const selectedCustomer = ref<string>('');
 const customers = ref([]);
-const selectedCustomer = ref('');
-//
-// function calculateDiscount(e){
-//   discount.value = e.target.value;
-//   grandTotal.value = props.totalCarts - e.target.value;
-//   cash.value=0;
-//   change.value=0;
-// }
-//
-// function calculateGrandTotal(){
-//   grandTotal.value = props.totalCarts;
-// }
-//
-// function calculateChange(e){
-// cash.value = e.target.value;
-// change.value =e.target.value-grandTotal.value;
-// }
-//
+
+const errors = ref({
+  customer: '',
+  discount: '',
+  cash: '',
+  change: '',
+});
+
+function validateForm() {
+  let isValid = true;
+
+  errors.value.customer = '';
+  errors.value.discount = '';
+  errors.value.cash = '';
+  errors.value.change = '';
+
+
+  if (grandTotal.value <= 0) {
+    toast("Keranjang kosong atau total pembayaran tidak valid.", { type: "error" });
+    return; // hentikan proses transaksi
+  }
+  if (discount.value < 0) {
+    errors.value.discount = 'Discount tidak boleh negatif';
+    isValid = false;
+  }
+
+  if (!cash.value || isNaN(cash.value)) {
+    errors.value.cash = 'Cash harus diisi dengan angka valid';
+    isValid = false;
+  } else if (cash.value < grandTotal.value) {
+    errors.value.cash = 'Cash harus lebih besar atau sama dengan Grand Total';
+    isValid = false;
+  }
+
+  if (change.value < 0) {
+    errors.value.change = 'Cash kurang dari Total tagihan, tidak cukup untuk pembayaran';
+    isValid = false;
+  }
+
+  return isValid;
+}
+
+function calculateDiscount(e){
+  discount.value = parseInt((e.target as HTMLInputElement).value) || 0;
+  grandTotal.value = props.totalCarts - e.target.value;
+  cash.value=0;
+  change.value=0;
+}
+
+function calculateGrandTotal(){
+  grandTotal.value = props.totalCarts;
+}
+
+function calculateChange(e){
+  cash.value = parseInt((e.target as HTMLInputElement).value) || 0;
+  change.value =e.target.value-grandTotal.value;
+}
+
 const fetchCustomers = async () => {
   const token = Cookies.get("token");
   if(token){
@@ -53,52 +94,63 @@ const fetchCustomers = async () => {
     customers.value = response.data.data;
   }
 };
-//
-// const storeTransaction = async () => {
-//   const token = Cookies.get("token");
-//   if(token){
-//     Api.defaults.headers.common["Authorization" ]= token;
-//     await Api.post(`/api/transactions`,{
-//       customer_id:selectedCustomer.value ? selectedCustomer.value.value : null,
-//       discount:parseInt(discount.value) || 0,
-//       cash:parseInt(cash.value),
-//       change:parseInt(change.value),
-//       grand_total:parseInt(grandTotal.value),
-//     })
-//         .then((response) => {
-//           toast(`${response.data.meta.message}`,{
-//             type: 'success',
-//             dangerouslyHTMLString:true
-//           });
-//
-//           props.fetchCarts();
-//
-//           const receiptWindow = window.open(`/transaction/print?invoice=${response.data.data.invoice}`, '_blank');
-//           if(receiptWindow){
-//             setTimeout(()=>{
-//               try{
-//                 receiptWindow.focus();
-//                 receiptWindow.print();
-//                 receiptWindow.onafterprint = function(){
-//                   receiptWindow.close();
-//                 };
-//               }catch(error){
-//                 console.log("Eror saat melakukan printing:", error);
-//               }
-//               cash.value=0;
-//               change.value=0;
-//             },2000);
-//           }else{
-//             console.log("Gagal membuka jendela print")
-//           }
-//         })
-//   }
-// };
-//
-// watchEffect(() => {
-//   calculateGrandTotal();
-// });
-//
+
+const storeTransaction = async () => {
+
+  if (!validateForm()) {
+    toast(`Mohon perbaiki data input yang tidak valid`, {type: 'error', dangerouslyHTMLString:true});
+    return;
+  }
+  const token = Cookies.get("token");
+  if(token){
+    Api.defaults.headers.common["Authorization" ]= token;
+
+    try {
+      const response = await Api.post(`/api/transactions`,{
+
+        customer_id: selectedCustomer.value ? selectedCustomer.value.value : null,
+        discount:parseInt(discount.value) || 0,
+        cash:parseInt(cash.value),
+        change:parseInt(change.value),
+        grand_total:parseInt(grandTotal.value),
+      });
+
+      toast(`${response.data.meta.message}`,{
+        type: 'success',
+        dangerouslyHTMLString:true
+      });
+
+      props.fetchCarts();
+
+      const receiptWindow = window.open(`/transactions/print?invoice=${response.data.data.invoice}`, '_blank');
+      if(receiptWindow){
+        setTimeout(()=>{
+          try{
+            receiptWindow.focus();
+            receiptWindow.print();
+            receiptWindow.onafterprint = function(){
+              receiptWindow.close();
+            };
+          }catch(error){
+            console.log("Error saat melakukan printing:", error);
+          }
+          cash.value=0;
+          change.value=0;
+        },2000);
+      }else{
+        console.log("Gagal membuka jendela print");
+      }
+    } catch (error: any) {
+      const message = error.response?.data?.meta?.message || error.message || 'Terjadi kesalahan saat melakukan transaksi';
+      toast(message, {type: 'error'});
+    }
+  }
+};
+
+watchEffect(() => {
+  calculateGrandTotal();
+});
+
 onMounted(() => {
   fetchCustomers();
 });
@@ -121,7 +173,7 @@ onMounted(() => {
           <div>{{moneyFormat(grandTotal)}}</div>
         </div>
         <div class="border-b-4 border-gray-200 my-2"></div>
-        <div class="flex justify-end">
+        <div class="flex justify-end text-green-500">
           Change : {{ moneyFormat(change) }}
         </div>
       </div>
@@ -136,12 +188,12 @@ onMounted(() => {
           </div>
           <div class="flex flex-col w-full justify-between gap-2">
             <label > Discount (Rp. )</label>
-            <input type="number" placeholder="Cash (Rp.)" v-model="cash" class="bg-white shadow-sm border border-b-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-b-blue-500 block w-full p-2.5" />
+            <input @input="calculateDiscount" type="number" placeholder="Cash (Rp.)" v-model="discount" class="bg-white shadow-sm border border-b-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-b-blue-500 block w-full p-2.5" />
           </div>
         </div>
       <div class="flex flex-col gap-2 w-full">
         <label > Cash (Rp. )</label>
-        <input type="number" placeholder="Cash (Rp.)" v-model="cash" class="bg-white shadow-sm border border-b-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-b-blue-500 block w-full p-2.5" />
+        <input @input="calculateChange" type="number" placeholder="Cash (Rp.)" v-model="cash" class="bg-white shadow-sm border border-b-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-b-blue-500 block w-full p-2.5" />
       </div>
 
 
@@ -149,7 +201,7 @@ onMounted(() => {
           <DialogClose as-child>
             <a href="#" class="bg-white rounded-md p-2 border-2 hover:bg-gray-200">Batal</a>
           </DialogClose>
-          <button type="submit" class="bg-blue-500 rounded-md p-2 text-white cursor-pointer hover:bg-sky-500">Bayar dan Cetak</button>
+          <button @click="storeTransaction" type="submit" class="bg-blue-500 rounded-md p-2 text-white cursor-pointer hover:bg-sky-500">Bayar dan Cetak</button>
         </DialogFooter>
     </DialogContent>
 
