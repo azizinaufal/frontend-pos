@@ -33,7 +33,7 @@ const filterProfits = async (e) => {
   <div class="flex flex-col m-6">
     <div class="flex flex-col">
       <p class="font-sans text-gray-600 text-s">HALAMAN</p>
-      <h2 class="font-bold text-2xl">PENJUALAN</h2>
+      <h2 class="font-bold text-2xl">PROFITS</h2>
     </div>
     <form @submit="filterProfits">
       <div class="flex my-4 bg-white border shadow-sm rounded-sm p-4 gap-4  items-center ">

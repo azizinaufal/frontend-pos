@@ -57,10 +57,10 @@ const loginHandler = async () => {
                 <div class="flex flex-col gap-6">
                   <div class="flex flex-col items-center text-center">
                     <h1 class="text-2xl font-bold">
-                      Welcome back
+                      Hai Selamat Datang, Kembali
                     </h1>
                     <p class="text-muted-foreground text-balance">
-                      Login to your Acme Inc account
+                      Masuk ke akun Anda
                     </p>
                   </div>
                   <div class="grid gap-3">
@@ -73,33 +73,32 @@ const loginHandler = async () => {
                   <div class="grid gap-3">
                     <div class="flex items-center">
                       <Label for="password">Password</Label>
-                      <a href="#" class="ml-auto text-sm underline-offset-2 hover:underline">Forgot your password?</a>
                     </div>
                     <Input id="password" type="password" v-model="password" />
                     <div v-if="errors.password" class="text-red-600 text-sm mt-1">
                       {{ errors.password }}
                     </div>
                   </div>
-                  <Button type="submit" class="w-full cursor-pointer">
+                  <Button type="submit" class="w-full text-black font-bold cursor-pointer shadow-[5px_7px_0_rgb(0,0,0)] bg-[#D2FF72] hover:bg-[#00995E] rounded-none">
                     Login
                   </Button>
                   <div class="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
               <span class="bg-card text-muted-foreground relative z-10 px-2">
-                Or continue with
+                Belum memiliki Akun?
               </span>
                   </div>
 
                   <div class="text-center text-sm">
-                    Don't have an account?
-                    <a href="#" class="underline underline-offset-4">
-                      Sign up
+
+                    <a href="/register" class="underline underline-offset-4">
+                      Daftar di sini
                     </a>
                   </div>
                 </div>
               </form>
               <div class="bg-muted relative hidden md:block">
                 <img
-                    src="@/assets/vue.svg"
+                    src="../../public/images/kasirin.png"
                     alt="Image"
                     class="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
                 >
@@ -108,7 +107,8 @@ const loginHandler = async () => {
           </Card>
           <div class="text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
             By clicking continue, you agree to our <a href="#">Terms of Service</a>
-            and <a href="#">Privacy Policy</a>.
+            and <a href="#">Privacy Policy</a>. <br> <br>
+            <a href="https://www.flaticon.com/free-icons/user" title="user icons">User icons created by Freepik - Flaticon</a>
           </div>
         </div>
 

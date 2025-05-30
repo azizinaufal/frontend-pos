@@ -10,9 +10,10 @@ import {
   SidebarTrigger,
 } from '@/components/ui/sidebar'
 const router = useRouter();
+
 const logoutHandler = () => {
   userStore.logout();
-  return router.push({ path: "/", replace: true });
+  return router.push({ path: "/login", replace: true });
 };
 const showDropdown = ref<boolean>(false);
 const dropdownRef = ref<HTMLElement | null>(null);
@@ -40,13 +41,16 @@ onUnmounted(() => {
         <header class="flex h-16 shrink-0 items-center gap-2 border-b px-4">
           <SidebarTrigger class="-ml-1" />
           <nav class="flex item-center justify-between w-full">
-            <div class="flex items-center justify-center gap-1">
-              <img src="/src/assets/vue.svg " alt="Logo Kasir.in">
-              <h3 class="font-bold">KASIR.IN</h3>
+            <div class="flex items-center justify-center gap-1 ">
+              <img src="../../../public/images/kasirin.png " alt="Logo Kasir.in" class="w-10 h-10 rounded-full object-cover border-2">
+              <h3 class="font-bold font-fredoka">KASIRIN.ME</h3>
             </div>
             <div class="relative" ref="dropdownRef">
               <div class="flex items-center justify-center gap-1 cursor-pointer" @click="showDropdown = !showDropdown">
-                <img src="/src/assets/vue.svg" alt="Avatar" class="w-8 h-8 rounded-full object-cover border-2"/>
+                <div class="flex h-8 w-8 items-start justify-center overflow-hidden rounded-full border border-slate-800 bg-slate-50 shadow-[2px_2px_0px_rgba(0,0,0,1)] lg:cursor-pointer">
+                  <img src="../../../public/images/profile.png" alt="Avatar Image" class="aspect-square h-full w-full object-cover">
+
+                </div>
                 <div class="flex flex-col gap-0.25">
                   <p class="font-semibold text-sm">{{ userStore.user?.name }}</p>
                   <p class="text-gray-600 text-xs">{{ userStore.user?.email }}</p>

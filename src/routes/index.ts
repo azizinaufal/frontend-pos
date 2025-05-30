@@ -1,8 +1,10 @@
 import {createRouter,createWebHistory} from "vue-router";
 import {useUser} from "../stores/user.ts";
-import Login from '@/views/auth/Login.vue'
-import Dashboard from '@/views/dashboard/DashboardLayout.vue';
-import Index from '@/views/dashboard/Index.vue';
+import Index from '@/views/LandingPage/Index.vue';
+import Register from '@/views/auth/Register.vue';
+import Login from '@/views/auth/Login.vue';
+import DashboardLayout from '@/views/dashboard/DashboardLayout.vue';
+import Dashboard from '@/views/dashboard/Index.vue';
 import Categories from '@/views/categories/Categories.vue';
 import Products from '@/views/products/Product.vue';
 import Customers from '@/views/customers/Customer.vue';
@@ -15,6 +17,11 @@ import Profits from '@/views/profits/Profits.vue';
 const routes =[
     {
         path:'/',
+        name:'index',
+        component:Index,
+    },
+    {
+        path:'/login',
         beforeEnter: (_to, _from, next) => {
             useUser().getToken ? next('/dashboard') : next()
         },
@@ -22,9 +29,14 @@ const routes =[
         component: Login,
     },
     {
+        path:'/register',
+        name:'register',
+        component:Register,
+    },
+    {
         path:'/dashboard',
         name:'dashboard',
-        component: Dashboard,
+        component: DashboardLayout,
         beforeEnter: (_to,_before,next) => {
             useUser().getToken ? next() : next('/')
         },
@@ -32,7 +44,7 @@ const routes =[
             {
                 path:'',
                 name:'dashboard.index',
-                component:Index,
+                component:Dashboard,
             },
             {
                 path:'/categories',
