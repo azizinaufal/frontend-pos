@@ -1,4 +1,4 @@
-import {createRouter,createWebHistory} from "vue-router";
+import {createRouter,createWebHistory,type RouteRecordRaw} from "vue-router";
 import {useUser} from "../stores/user.ts";
 import Index from '@/views/LandingPage/Index.vue';
 import Register from '@/views/auth/Register.vue';
@@ -14,7 +14,7 @@ import Print from '@/views/transactions/print/Print.vue';
 import Sales from '@/views/sales/Sales.vue';
 import Profits from '@/views/profits/Profits.vue';
 
-const routes =[
+const routes:RouteRecordRaw[] =[
     {
         path:'/',
         name:'index',
@@ -43,7 +43,7 @@ const routes =[
         children:[
             {
                 path:'',
-                name:'dashboard.index',
+                name:'/dashboard.index',
                 component:Dashboard,
             },
             {

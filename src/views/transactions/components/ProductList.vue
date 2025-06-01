@@ -16,6 +16,7 @@ const props = defineProps({
     image: string;
     sell_price: number;
     description: string;
+    barcode:string;
   }>,
   fetchCarts:Function,
 });
@@ -47,7 +48,7 @@ const addToCart = (product) => {
           <Card class="flex flex-col w-full h-full p-4 shadow hover:shadow-lg transition rounded-xl border border-gray-200">
             <CardHeader class="text-center">
               <CardTitle class="text-lg font-bold truncate">{{ product.title }}</CardTitle>
-              <CardDescription class="text-xs text-gray-500">Kode: {{ product.code }}</CardDescription>
+              <CardDescription class="text-xs text-gray-500">Kode: {{ product.barcode }}</CardDescription>
             </CardHeader>
 
             <CardContent class="flex flex-col items-center justify-between gap-3 flex-grow">
