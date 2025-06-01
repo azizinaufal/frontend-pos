@@ -40,27 +40,42 @@ const addToCart = (product) => {
 
 <template>
 
-<div v-if="products.length > 0">
-  <div class="flex flex-wrap gap-4">
-    <div v-for="product in products" :key="product.id" class="col-4">
-      <Card class=" w-[250px] h-auto gap-2 items-center">
-        <CardHeader>
-          <CardTitle></CardTitle>
-          <CardDescription></CardDescription>
-        </CardHeader>
-        <CardContent class="w-full flex flex-col justify-between gap-4 items-center">
-          <div class=" bg-green-600 p-2 rounded-lg">
-            <h4 class=" mb-0 text-sm text-white">{{ moneyFormat(product.sell_price) }}</h4>
-          </div>
-          <img :src="`${getImageUrl(product.image)}`" :alt="product.title" class="rounded w-full h-[100px] object-cover" />
-          <div class="w-full flex font-bold text-xs justify-center items-center text-2xl">{{product.title}}</div>
-          <button class="w-full p-2 bg-blue-500 text-white rounded-2xl text-sm cursor-pointer" @click="addToCart(product)"> Tambahkan Ke Keranjang </button>
-        </CardContent>
-        <CardFooter></CardFooter>
-      </Card>
+  <div v-if="products.length > 0">
+    <div class="container px-4 mx-auto">
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
+        <div v-for="product in products" :key="product.id" class="flex">
+          <Card class="flex flex-col w-full h-full p-4 shadow hover:shadow-lg transition rounded-xl border border-gray-200">
+            <CardHeader class="text-center">
+              <CardTitle class="text-lg font-bold truncate">{{ product.title }}</CardTitle>
+              <CardDescription class="text-xs text-gray-500">Kode: {{ product.code }}</CardDescription>
+            </CardHeader>
+
+            <CardContent class="flex flex-col items-center justify-between gap-3 flex-grow">
+              <div class="bg-green-600 text-white px-3 py-1 rounded-md text-sm font-semibold">
+                {{ moneyFormat(product.sell_price) }}
+              </div>
+
+              <img
+                  :src="getImageUrl(product.image)"
+                  :alt="product.title"
+                  class="w-full h-24 object-cover rounded"
+              />
+
+              <button
+                  class="w-full py-2 mt-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg"
+                  @click="addToCart(product)"
+              >
+                Tambahkan Ke Keranjang
+              </button>
+            </CardContent>
+
+            <CardFooter></CardFooter>
+          </Card>
+        </div>
+      </div>
     </div>
   </div>
-</div>
+
 </template>
 
 <style scoped>

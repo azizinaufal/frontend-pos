@@ -13,7 +13,7 @@ import Payment from './components/Payment.vue';
 
 
 const products = ref([]);
-const barcode = ref("");
+const title = ref("");
 const searchInput = ref(null);
 const categories= ref([]);
 const currentCategoryId = ref(null);
@@ -70,11 +70,11 @@ const fetchProducts = async (pageNumber) => {
   }
 };
 
-const fetchProductByBarcode = async (barcode: string) => {
+const fetchProductByBarcode = async (title: string) => {
   if(token){
     Api.defaults.headers.common["Authorization"] = token;
 
-    await Api.post(`/api/products-by-barcode`, {barcode})
+    await Api.post(`/api/products-by-barcode`, {title})
     .then((response)=>{
       products.value = response.data.data;
     });
@@ -94,8 +94,8 @@ const fetchCarts = async () => {
 };
 
 const searchHandler = (e) =>{
-  console.log("Barcode:", barcode.value);
-  barcode.value = e.target.value;
+
+  title.value = e.target.value;
   fetchProductByBarcode(e.target.value);
 }
 
@@ -113,8 +113,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="flex  gap-4 m-6">
-    <div class="w-[800px] flex flex-col gap-4 mt-8">
+  <div class=" grid grid-cols-1 gap-4 lg:grid-cols-3">
+    <div class="w-full col-span-2">
       <form @submit.prevent="searchHandler">
         <div class="relative w-full flex">
           <div class="absolute p-2">
@@ -122,8 +122,8 @@ onMounted(() => {
           </div>
 
           <input type="text"
-                 placeholder="Scan Barcode..."
-                 v-model="barcode"
+                 placeholder="Nama produk"
+                 v-model="title"
                  ref="searchInput"
                  @input="searchHandler"
                  class="block w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -133,12 +133,11 @@ onMounted(() => {
       <CategoryList :categories="categories" :fetchProducts="fetchProducts" :fetchProductByCategoryID="fetchProductByCategoryID" @update:currentCategoryId="(newId) => currentCategoryId = newId"/>
       <ProductList :products="products" :fetchCarts="fetchCarts" />
     </div>
-
-    <div class="mt-8 bg-white shadow-sm w-[350px] h-[600px] flex flex-col rounded-xl border py-4 shadow-sm">
-
+    <div class="w-full flex justify-center ">
+      <div class="mt-8 bg-white shadow-sm w-full h-[600px] flex flex-col rounded-xl border py-4 shadow-sm">
         <h5 class="font-bold mx-4 ">ORDER ITEMS</h5>
         <div class="border-b-4 border-gray-100 my-2"></div>
-        <div class="flex-1 overflow-auto px-4">
+        <div class="flex-1 overflow-auto px-4 flex flex-col items-center">
           <OrderItemList :carts="carts" :fetchCarts="fetchCarts" />
         </div>
 
@@ -147,10 +146,12 @@ onMounted(() => {
           <h4 class="text-xs ">Total ({{ carts.length }} Items)</h4>
           <h4 class="text-sm">{{ moneyFormat(totalCarts) }}</h4>
         </div>
-      <div class=" flex item-center justify-center ">
-        <Payment :totalCarts="totalCarts" :fetchCarts="fetchCarts"/>
+        <div class=" flex item-center justify-center ">
+          <Payment :totalCarts="totalCarts" :fetchCarts="fetchCarts"/>
+        </div>
       </div>
     </div>
+
 
     </div>
 

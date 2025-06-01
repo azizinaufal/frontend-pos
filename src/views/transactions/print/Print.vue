@@ -1,32 +1,63 @@
 <script setup lang="ts">
-import {ref,onMounted} from 'vue';
-import {moneyFormat} from "@/utils/moneyFormat.ts";
+import { ref, onMounted } from 'vue';
+import { moneyFormat } from "@/utils/moneyFormat.ts";
 import Api from "@/services/api.ts";
 import Cookies from "js-cookie";
 
-const queryParams = new URLSearchParams(window.location.search);
-const invoice= queryParams.get("invoice");
+interface Product {
+  title: string;
+}
 
-const transaction = ref({});
-const transactionDetails = ref([]);
+interface TransactionDetail {
+  product: Product;
+  qty: number;
+  price: number;
+}
+
+interface Cashier {
+  name?: string;
+}
+
+interface Customer {
+  name?: string;
+}
+
+interface Transaction {
+  created_at?: string;
+  invoice?: string;
+  cashier?: Cashier;
+  customer?: Customer;
+  discount?: number;
+  cash?: number;
+  change?: number;
+  transaction_details?: TransactionDetail[];
+}
+
+const queryParams = new URLSearchParams(window.location.search);
+const invoice = queryParams.get("invoice") || "";
+
+const transaction = ref<Transaction>({});
+const transactionDetails = ref<TransactionDetail[]>([]);
 
 const token = Cookies.get("token");
 
 const fetchTransactions = async () => {
-  if(token){
+  if (token) {
     Api.defaults.headers.common["Authorization"] = token;
-    const response = await Api.get(`/api/transactions?invoice=${invoice}`);
+    try {
+      const response = await Api.get(`/api/transactions?invoice=${invoice}`);
 
-    transaction.value = response.data.data;
-    transactionDetails.value = response.data.data.transaction_details;
-    console.log(response)
+      transaction.value = response.data.data ?? {};
+      transactionDetails.value = response.data.data?.transaction_details ?? [];
+    } catch (error) {
+      console.error("Gagal fetch transaksi:", error);
+    }
   }
 };
 
 onMounted(() => {
   fetchTransactions();
 });
-
 </script>
 
 <template>

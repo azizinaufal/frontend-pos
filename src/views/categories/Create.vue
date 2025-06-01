@@ -7,7 +7,7 @@ import {toast} from 'vue3-toastify';
 import "vue3-toastify/dist/index.css";
 import {handleErrors} from '@/utils/handleErrors.ts';
 import {
-  Dialog,
+  Dialog, DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -126,7 +126,9 @@ const props = defineProps({
       </div>
     </DialogHeader>
     <DialogFooter>
-      <a href="#" class="bg-white rounded-md p-2 border-2 hover:bg-gray-200">Batal</a>
+      <DialogClose as-child>
+        <a href="#" class="bg-white rounded-md p-2 border-2 hover:bg-gray-200">Batal</a>
+      </DialogClose>
      <button type="submit" class="bg-blue-500 rounded-md p-2 text-white cursor-pointer hover:bg-sky-500">Simpan</button>
     </DialogFooter>
     </form>

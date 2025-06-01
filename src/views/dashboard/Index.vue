@@ -139,23 +139,35 @@ watchEffect(() => {
     productBestSellingChartOptions.value = {
       chart:{
         type:'pie',
-        height:350,
+        height:'auto',
       },
       labels:productsBestSelling.value.map(product=>product.title),
       responsive:[{
-        breakpoint:480,
-        options:{
-          chart:{
-            width:200,
+        breakpoint: 640,
+        options: {
+          chart: {
+            width: '100%',
           },
-          legend:{
+          legend: {
             position: 'bottom',
           }
         }
+      },
+        {
+          // Tablets
+          breakpoint: 1024,
+          options: {
+            chart: {
+              width: '100%',
+            },
+            legend: {
+              position: 'bottom',
+            }
+          }
       }],
       colors:generateRandomColors(productsBestSelling.value.length),
       legend:{
-        position: 'right',
+        position: 'bottom',
       },
       tooltip:{
         y:{
@@ -171,67 +183,82 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="flex gap-4">
-    <Card class="w-[300px] h-[200px]">
-      <CardHeader>
-        <CardTitle>Penjualan Hari Ini</CardTitle>
-        <CardDescription>Hasil total penjualan hari ini</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <div class="text-2xl font-medium">{{ countSalesToday }}</div>
-        <div class="my-2 h-0.5 border-t-0 bg-neutral-600 dark:bg-white/10"></div>
-        <div class="pb-4 font-bold text-2xl">{{ moneyFormat(sumSalesToday) }}</div>
-      </CardContent>
-      <CardFooter class="flex justify-between px-6 pb-6"></CardFooter>
-    </Card>
+  <div class="container">
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-4 lg:grid-cols-4 lg:gap-4">
 
-    <Card class="w-[300px] h-[200px]">
-      <CardHeader>
-        <CardTitle>Keuntungan Hari Ini</CardTitle>
-        <CardDescription>Keuntungan Penjualan Hari Ini</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <div class="font-bold">{{ moneyFormat(sumProfitsToday) }}</div>
-      </CardContent>
-      <CardFooter class="flex justify-between px-6 pb-6"></CardFooter>
-    </Card>
+      <div class="w-full h-full">
+        <Card class="h-full flex flex-col">
+          <CardHeader>
+            <CardTitle>Penjualan Hari Ini</CardTitle>
+            <CardDescription>Hasil total penjualan hari ini</CardDescription>
+          </CardHeader>
+          <CardContent class="grow">
+            <div class="text-2xl font-medium">{{ countSalesToday }}</div>
+            <div class="my-2 h-0.5 border-t-0 bg-neutral-600 dark:bg-white/10"></div>
+            <div class="pb-4 font-bold text-2xl">{{ moneyFormat(sumSalesToday) }}</div>
+          </CardContent>
+          <CardFooter></CardFooter>
+        </Card>
+      </div>
 
-    <Card class="w-[300px] h-[200px]">
-      <CardHeader>
-        <CardTitle>Penjualan</CardTitle>
-        <CardDescription>7 Hari Terakhir</CardDescription>
-      </CardHeader>
-      <CardContent class="px-0">
-        <div class="px-6 font-bold" >{{ moneyFormat(sumSalesWeek) }}</div>
-          <div class="mt-4">
-            <VueApexCharts type="area" height="70"   :options="salesChartOptions" :series="salesChartSeries"/>
-          </div>
+      <div class="w-full h-full">
+        <Card class="h-full flex flex-col">
+          <CardHeader>
+            <CardTitle>Keuntungan Hari Ini</CardTitle>
+            <CardDescription>Keuntungan Penjualan Hari Ini</CardDescription>
+          </CardHeader>
+          <CardContent class="grow">
+            <div class="pb-4 font-bold text-2xl">{{ moneyFormat(sumProfitsToday) }}</div>
+          </CardContent>
+          <CardFooter></CardFooter>
+        </Card>
+      </div>
 
-      </CardContent>
-      <CardFooter class="flex justify-between px-6 pb-6"></CardFooter>
-    </Card>
+      <div class="w-full h-full">
+        <Card class="h-full flex flex-col">
+          <CardHeader>
+            <CardTitle>Penjualan</CardTitle>
+            <CardDescription>7 Hari Terakhir</CardDescription>
+          </CardHeader>
+          <CardContent class="grow px-0">
+            <div class="px-6 font-bold">{{ moneyFormat(sumSalesWeek) }}</div>
+          </CardContent>
+          <CardFooter><VueApexCharts type="area" height="70" :options="salesChartOptions" :series="salesChartSeries" /></CardFooter>
+        </Card>
+      </div>
 
-    <Card class="w-[300px] h-[200px]">
-      <CardHeader>
-        <CardTitle>Keuntungan</CardTitle>
-        <CardDescription>Keuntungan 7 Hari Terakhir</CardDescription>
-      </CardHeader>
-      <CardContent class="px-0">
-        <div class=" px-6 font-bold">{{ moneyFormat(sumProfitsWeek) }}</div>
-        <div class="mt-4">
-          <VueApexCharts type="bar" height="65"  :options="profitsChartOptions" :series="profitsChartSeries"/>
-        </div>
-      </CardContent>
-      <CardFooter class="flex justify-between px-6 pb-6"></CardFooter>
-    </Card>
+      <div class="w-full h-full">
+        <Card class="h-full flex flex-col">
+          <CardHeader>
+            <CardTitle>Keuntungan</CardTitle>
+            <CardDescription>Keuntungan 7 Hari Terakhir</CardDescription>
+          </CardHeader>
+          <CardContent class="grow px-0">
+            <div class="px-6 font-bold">{{ moneyFormat(sumProfitsWeek) }}</div>
+
+          </CardContent>
+          <CardFooter> <VueApexCharts type="bar" height="65" :options="profitsChartOptions" :series="profitsChartSeries" /></CardFooter>
+        </Card>
+      </div>
+
+    </div>
   </div>
-  <div class="flex gap-2">
-    <div class="mt-8 bg-white shadow-sm w-[800px] rounded-xl border py-6 shadow-sm ">
+
+<div class="container">
+  <div class="grid grid-cols-1 gap-4 md:grid-cols-1 lg:grid-cols-3">
+    <div class="mt-4 bg-white shadow-sm w-full rounded-xl border py-6 shadow-sm lg:col-span-2">
       <h5 class="font-bold mx-4 ">PRODUK TERLARIS</h5>
       <div class="border-b-4 border-gray-100 my-4"></div>
-      <VueApexCharts width="380" type="pie" :options=" productBestSellingChartOptions" :series="bestProductSellingChartSereis" />
+      <div class="w-full flex justify-center">
+        <VueApexCharts
+            type="pie"
+            :options="productBestSellingChartOptions"
+            :series="bestProductSellingChartSereis"
+            width="100%"
+        />
+      </div>
     </div>
-    <div class="mt-8 bg-white shadow-sm w-[350px]  rounded-xl border py-6 shadow-sm">
+    <div class="mt-4 bg-white shadow-sm w-full rounded-xl border py-6 shadow-sm">
       <h5 class="font-bold mx-4 ">PRODUK DENGAN STOK LIMIT</h5>
       <div class="border-b-4 border-gray-100 my-4"></div>
       <div v-for="product in productsLimitStock" :key="product.id" class="mb-4 px-6 flex">
@@ -245,6 +272,8 @@ onMounted(() => {
       </div>
     </div>
   </div>
+</div>
+
 </template>
 <style scoped>
 </style>

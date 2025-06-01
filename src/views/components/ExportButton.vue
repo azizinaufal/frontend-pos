@@ -53,7 +53,7 @@ const exportExcel = async () => {
 </script>
 
 <template>
-  <button @click="exportExcel" class=" text-white px-8 items-center ml-2 bg-green-600 rounded-lg h-8 hover:bg-green-700 flex" :disabled="!props.startDate || !props.endDate">
+  <button @click="exportExcel" class=" text-white w-full justify-center p-4 items-center bg-green-600 rounded-md h-8 hover:bg-sky-700 flex" :disabled="!props.startDate || !props.endDate">
     <File />
     Export
   </button>

@@ -3,7 +3,7 @@ import {ref,onMounted, defineProps, watchEffect} from "vue";
 import {moneyFormat} from "@/utils/moneyFormat.ts";
 import Api from "@/services/api.ts";
 import Cookies from "js-cookie";
-import vSelect from "vue-select";
+import vSelect from 'vue-select';
 import 'vue-select/dist/vue-select.css';
 import {toast} from 'vue3-toastify';
 import 'vue3-toastify/dist/index.css';
@@ -26,7 +26,10 @@ const grandTotal = ref(props.totalCarts);
 const discount = ref<number>(0);
 const cash = ref<number>(0);
 const change = ref<number>(0);
-const selectedCustomer = ref<string>('');
+type Customer = { value: string; label: string };
+
+const selectedCustomer = ref<Customer | null>(null);
+
 const customers = ref([]);
 
 const errors = ref({
@@ -47,7 +50,7 @@ function validateForm() {
 
   if (grandTotal.value <= 0) {
     toast("Keranjang kosong atau total pembayaran tidak valid.", { type: "error" });
-    return; // hentikan proses transaksi
+    return;
   }
   if (discount.value < 0) {
     errors.value.discount = 'Discount tidak boleh negatif';
@@ -109,10 +112,10 @@ const storeTransaction = async () => {
       const response = await Api.post(`/api/transactions`,{
 
         customer_id: selectedCustomer.value ? selectedCustomer.value.value : null,
-        discount:parseInt(discount.value) || 0,
-        cash:parseInt(cash.value),
-        change:parseInt(change.value),
-        grand_total:parseInt(grandTotal.value),
+        discount: discount.value || 0,
+        cash: cash.value,
+        change: change.value,
+        grand_total: grandTotal.value,
       });
 
       toast(`${response.data.meta.message}`,{

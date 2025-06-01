@@ -35,48 +35,75 @@ const filterProfits = async (e) => {
       <p class="font-sans text-gray-600 text-s">HALAMAN</p>
       <h2 class="font-bold text-2xl">PROFITS</h2>
     </div>
-    <form @submit="filterProfits">
-      <div class="flex my-4 bg-white border shadow-sm rounded-sm p-4 gap-4  items-center ">
-        <div class="flex flex-col gap-2 my-2 w-full">
-          <label class="font-bold">TANGGAL AWAL</label>
-          <input v-model="startDate" type="date" class="bg-white shadow-sm border border-b-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-b-blue-500 block w-full p-2.5">
-        </div>
-        <div class="flex flex-col gap-2 my-2 w-full">
-          <label class="font-bold">TANGGAL AKHIR</label>
-          <input v-model="endDate" type="date"  class="bg-white shadow-sm border border-b-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-b-blue-500 block w-full p-2.5">
-        </div>
-        <div class="mt-6 gap-4 flex flex-col">
-          <button class="text-white px-8 items-center ml-2 bg-blue-600 rounded-lg h-8 hover:bg-sky-700 flex">
-            <Funnel></Funnel>
-            Filter
-          </button>
-          <ExportButton :startDate="startDate" :endDate="endDate" type="profits" />
-        </div>
+<!--    <form @submit="filterProfits">-->
+<!--      <div class="flex my-4 bg-white border shadow-sm rounded-sm p-4 gap-4  items-center ">-->
+<!--        <div class="flex flex-col gap-2 my-2 w-full">-->
+<!--          <label class="font-bold">TANGGAL AWAL</label>-->
+<!--          <input v-model="startDate" type="date" class="bg-white shadow-sm border border-b-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-b-blue-500 block w-full p-2.5">-->
+<!--        </div>-->
+<!--        <div class="flex flex-col gap-2 my-2 w-full">-->
+<!--          <label class="font-bold">TANGGAL AKHIR</label>-->
+<!--          <input v-model="endDate" type="date"  class="bg-white shadow-sm border border-b-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-b-blue-500 block w-full p-2.5">-->
+<!--        </div>-->
+<!--        <div class="mt-6 gap-4 flex flex-col">-->
+<!--          <button class="text-white px-8 items-center ml-2 bg-blue-600 rounded-lg h-8 hover:bg-sky-700 flex">-->
+<!--            <Funnel></Funnel>-->
+<!--            Filter-->
+<!--          </button>-->
+<!--          <ExportButton :startDate="startDate" :endDate="endDate" type="profits" />-->
+<!--        </div>-->
 
+<!--      </div>-->
+<!--    </form>-->
+
+    <form @submit="filterProfits">
+      <div class="container">
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-3 gap-4 lg:grid-cols-3  ">
+          <div class="flex flex-col gap-2 my-2 w-full">
+            <label class="font-bold">TANGGAL AWAL</label>
+            <input v-model="startDate" type="date" class="bg-white shadow-sm border border-b-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-b-blue-500 block w-full p-2.5">
+          </div>
+          <div class="flex flex-col gap-2 my-2 w-full">
+            <label class="font-bold">TANGGAL AKHIR</label>
+            <input v-model="endDate" type="date"  class="bg-white shadow-sm border border-b-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-b-blue-500 block w-full p-2.5">
+          </div>
+          <div class="mt-6 gap-4 w-1/2 flex flex-col  items-center md:items-center">
+            <button class=" text-white w-full justify-center p-4 items-center bg-blue-600 rounded-md h-8 hover:bg-sky-700 flex">
+              <Funnel></Funnel>
+              Filter
+            </button>
+            <ExportButton :startDate="startDate" :endDate="endDate" type="profits" />
+          </div>
+
+        </div>
       </div>
+
     </form>
-    <div v-if="profits.length>0">
-      <table class="w-full table-spacing-4 border border-gray-400 border-collapse text-center">
-        <thead>
-        <tr class="bg-gray-200">
-          <th class="p-2 border border-gray-300">Date</th>
-          <th class="p-2 border border-gray-300">Invoice</th>
-          <th class="p-2 border border-gray-300">Total</th>
+
+
+    <div v-if="profits.length > 0" class="overflow-x-auto rounded-md border mt-8">
+      <table class="min-w-full table-auto border-collapse border border-gray-400 text-sm text-center">
+        <thead class="bg-gray-200">
+        <tr>
+          <th class="p-2 border border-gray-300 whitespace-nowrap">Date</th>
+          <th class="p-2 border border-gray-300 whitespace-nowrap">Invoice</th>
+          <th class="p-2 border border-gray-300 whitespace-nowrap">Total</th>
         </tr>
         </thead>
         <tbody>
-        <tr v-for="(profit,index) in profits" :key="index">
-          <td class="p-2 border border-gray-300">{{profit.created_at}}</td>
-          <td class="p-2 border border-gray-300">{{profit.transaction.invoice}}</td>
-          <td class="p-2 border border-gray-300 text-right">{{moneyFormat(profit.total)}}</td>
+        <tr v-for="(profit, index) in profits" :key="index">
+          <td class="p-2 border border-gray-300 whitespace-nowrap">{{ profit.created_at }}</td>
+          <td class="p-2 border border-gray-300 whitespace-nowrap">{{ profit.transaction.invoice }}</td>
+          <td class="p-2 border border-gray-300 text-right whitespace-nowrap">{{ moneyFormat(profit.total) }}</td>
         </tr>
         <tr>
           <td colspan="2" class="text-center font-bold p-2 border border-gray-300">Total</td>
-          <td class="text-end font-bold p-2 border border-gray-300">{{moneyFormat(total)}}</td>
+          <td class="text-end font-bold p-2 border border-gray-300 whitespace-nowrap">{{ moneyFormat(total) }}</td>
         </tr>
         </tbody>
       </table>
     </div>
+
   </div>
 </template>
 

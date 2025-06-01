@@ -10,7 +10,7 @@ import {
   DialogContent,
   DialogDescription,
   DialogFooter,
-  DialogHeader,
+  DialogHeader,DialogClose,
   DialogTitle, DialogTrigger
 } from "@/components/ui/dialog";
 const props = defineProps({
@@ -214,7 +214,9 @@ const updateProduct = async () => {
 
         </div>
         <DialogFooter>
-          <a href="#" class="bg-white rounded-md p-2 border-2 hover:bg-gray-200">Batal</a>
+          <DialogClose as-child>
+            <a href="#" class="bg-white rounded-md p-2 border-2 hover:bg-gray-200">Batal</a>
+          </DialogClose>
           <button type="submit" class="bg-blue-500 rounded-md p-2 text-white cursor-pointer hover:bg-sky-500">Simpan</button>
         </DialogFooter>
       </form>

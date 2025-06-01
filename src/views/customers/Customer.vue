@@ -64,7 +64,7 @@ const handleKeyDown = (e) =>{
       <Input id="search" type="text" placeholder="Cari Pelangaan" class="pl- 10" v-model="keywords" @keydown="handleKeyDown" />
       <Button class="ml-2 bg-blue-600 rounded-md h-8 hover:bg-sky-700" @click="searchHandler">Cari</Button>
     </div>
-    <div class="rounded-md border">
+    <div class="rounded-md border overflow-x-auto scrollbar-visible">
       <Table>
         <TableHeader>
           <TableRow>
@@ -83,17 +83,17 @@ const handleKeyDown = (e) =>{
               <p class="text-gray-600">{{ customer.address }}</p>
             </TableCell>
             <TableCell>
-              <p class="text-gray-600">{{customer.no_telp}}</p>
+              <p class="text-gray-600">{{ customer.no_telp }}</p>
             </TableCell>
             <TableCell>
               <div class="flex space-x-2">
-                <EditCustomer :fetchData="fetchData" :customerId="customer.id"/>
+                <EditCustomer :fetchData="fetchData" :customerId="customer.id" />
                 <DeleteButton :fetchData="fetchData" :id="customer.id" endpoint="/api/customers" />
               </div>
             </TableCell>
           </TableRow>
           <TableRow v-if="!customers.length">
-            <TableCell colspan="3" class="text-center">
+            <TableCell colspan="4" class="text-center">
               <div class="bg-red-100 text-red-600 p-4 rounded-md">
                 Data Belum Tersedia!
               </div>
@@ -102,6 +102,7 @@ const handleKeyDown = (e) =>{
         </TableBody>
       </Table>
     </div>
+
     <div class="text-end">
       <VueAwesomePaginate :total-items="pagination.total" :items-per-page="pagination.perPage" :max-pages-shown="2" v-model="pagination.currentPage" @click="fetchData"
                           :container-class="'paginate-container'"

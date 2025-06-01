@@ -25,16 +25,16 @@ onUnmounted(() => {
     <div class="container">
       <div class="flex items-center justify-between relative py-3 lg:mx-16">
         <a href="#beranda">
-          <div class="flex items-center gap-2 mt-4 px-4">
-            <div class="w-12 h-12 rounded-full border border-1 border-black">
+          <div class="flex items-center gap-2 mt-4 ">
+            <div class="w-8 h-8 rounded-full border border-1 border-black">
               <img src="../../../public/images/kasirin.png" alt="Kasirin Logo">
             </div>
-            <h6 class="font-bold text-xl">KASIRIN.ME</h6>
+            <h6 class="font-bold text-md">KASIRIN.ME</h6>
           </div>
         </a>
 
-        <div class="flex items-center px-4 ">
-          <button @click="hamburgerIsActive=!hamburgerIsActive"  type="button" :class="{'hamburger-active':hamburgerIsActive}" class=" block bg-[#D2FF72] absolute p-1 rounded-md border border-2 border-[#5c7326] right-4 shadow-[5px_7px_0_rgb(92,115,38)] lg:hidden">
+        <div class="flex items-center  ">
+          <button @click="hamburgerIsActive=!hamburgerIsActive"  type="button" :class="{'hamburger-active':hamburgerIsActive}" class=" block bg-[#D2FF72] absolute p-1 rounded-md border border-3 border-[#5c7326] right-4 shadow-[4px_4px_0_rgb(92,115,38)] lg:hidden">
             <span class="justify-center hamburger-line transition duration-300 ease-in-out origin-top-left"></span>
             <span class="hamburger-line transition duration-300 ease-in-out"></span>
             <span class="hamburger-line transition duration-300 ease-in-out origin-bottom-left"></span>

@@ -29,34 +29,54 @@ const { scrollRef, onMouseDown, onMouseLeave, onMouseUp, onMouseMove } = useHori
 </script>
 
 <template>
-<div class="flex flex-col m-6 md:flex-row gap-4 items-center">
-  <div class="w-full md:w-1/6">
-    <a href="#" class="block" @click.prevent="props.fetchProducts">
-    <div  class="border bg-white hover:bg-gray-100 shadow-md rounded m-2 p-2 flex flex-col items-center justify-center text-center transition">
-       <LayoutDashboard class="w-14 h-14 p-2 mb-2" />
-        <h4 class="text-base font-semibold">All</h4>
-      </div>
-    </a>
-  </div>
+  <div class="flex flex-col m-4 gap-4 md:flex-row md:items-start">
+    <!-- Tombol All -->
+    <div class="w-full md:w-auto">
+      <a href="#" @click.prevent="props.fetchProducts" class="block">
+        <div class="border bg-white hover:bg-gray-100 shadow-md rounded-md p-4 flex flex-col items-center text-center transition">
+          <LayoutDashboard class="w-14 h-14 p-2 mb-2" />
+          <h4 class="text-base font-semibold">All</h4>
+        </div>
+      </a>
+    </div>
 
-  <div class="w-full overflow-hidden">
-    <div ref="scrollRef" class="flex gap-4 overflow-x-auto p-2 cursor-grab active:cursor-grabbing"
-         @mousedown="onMouseDown"
-         @mouseleave="onMouseLeave"
-         @mouseup="onMouseUp"
-         @mousemove="onMouseMove">
-      <div v-for="category in props.categories" :key="category.id" class="flex-shrink-0 w-[150px] ">
-        <a href="#" @click.prevent="() => {props.fetchProductByCategoryID(category.id);emit('update:currentCategoryId', category.id);}"
-           class="block">
-          <div class="border bg-white hover:bg-gray-100 shadow-md rounded-lg p-2 gap-1.5 flex  items-center justify-center text-center transition">
-            <img :src="getImageUrl(category.image)" :alt="category.name" class="w-14 h-14 mb-2"/>
-            <h4 class="text-base font-semibold ">{{ category.name }}</h4>
-          </div>
-        </a>
+    <!-- List Kategori Scrollable -->
+    <div class="w-full overflow-hidden">
+      <div
+          ref="scrollRef"
+          class="flex gap-4 overflow-x-auto p-2 cursor-grab active:cursor-grabbing scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200"
+          @mousedown="onMouseDown"
+          @mouseleave="onMouseLeave"
+          @mouseup="onMouseUp"
+          @mousemove="onMouseMove"
+      >
+        <div
+            v-for="category in props.categories"
+            :key="category.id"
+            class="flex-shrink-0 w-[140px] sm:w-[160px]"
+        >
+          <a
+              href="#"
+              @click.prevent="() => {
+            props.fetchProductByCategoryID(category.id);
+            emit('update:currentCategoryId', category.id);
+          }"
+              class="block"
+          >
+            <div class="border bg-white hover:bg-gray-100 shadow-md rounded-lg p-2 flex flex-col items-center text-center transition">
+              <img
+                  :src="getImageUrl(category.image)"
+                  :alt="category.name"
+                  class="w-14 h-14 object-cover rounded-full mb-2"
+              />
+              <h4 class="text-sm font-semibold">{{ category.name }}</h4>
+            </div>
+          </a>
+        </div>
       </div>
     </div>
   </div>
-</div>
+
 </template>
 
 <style scoped>

@@ -71,8 +71,8 @@ const handleKeyDown = (e)=>{
       <Input id="search" type="text" placeholder="Cari Produk" class="pl- 10" v-model="keywords" @keydown="handleKeyDown" />
       <Button class="ml-2 bg-blue-600 rounded-md h-8 hover:bg-sky-700" @click="searchHandler">Cari</Button>
     </div>
-    <div class="rounded-md border">
-      <Table>
+    <div class="w-full overflow-x-auto  rounded-md border scrollbar-visible">
+      <Table class="min-w-[1000px] w-full table-auto ">
         <TableHeader>
           <TableRow>
             <TableHead class="w-6">Barcode</TableHead>
@@ -101,23 +101,23 @@ const handleKeyDown = (e)=>{
               <p class="text-gray-600">{{ product.category.name }}</p>
             </TableCell>
             <TableCell>
-              <p class="text-gray-600">{{moneyFormat(product.buy_price) }}</p>
+              <p class="text-gray-600">{{ moneyFormat(product.buy_price) }}</p>
             </TableCell>
             <TableCell>
-              <p class="text-gray-600">{{moneyFormat(product.sell_price) }}</p>
+              <p class="text-gray-600">{{ moneyFormat(product.sell_price) }}</p>
             </TableCell>
             <TableCell>
-              <p class="text-gray-600">{{product.stock }}</p>
+              <p class="text-gray-600">{{ product.stock }}</p>
             </TableCell>
             <TableCell>
               <div class="flex space-x-2">
-              <EditProduct :fetch-data="fetchData" :productId="product.id" />
-              <DeleteButton :id="product.id" :fetch-data="fetchData" endpoint="/api/products"  />
+                <EditProduct :fetch-data="fetchData" :productId="product.id" />
+                <DeleteButton :id="product.id" :fetch-data="fetchData" endpoint="/api/products" />
               </div>
             </TableCell>
           </TableRow>
           <TableRow v-if="!products.length">
-            <TableCell colspan="3" class="text-center">
+            <TableCell colspan="7" class="text-center">
               <div class="bg-red-100 text-red-600 p-4 rounded-md">
                 Data Belum Tersedia!
               </div>
@@ -126,6 +126,7 @@ const handleKeyDown = (e)=>{
         </TableBody>
       </Table>
     </div>
+
     <div class="text-end">
       <VueAwesomePaginate :total-items="pagination.total" :items-per-page="pagination.perPage" :max-pages-shown="2" v-model="pagination.currentPage" @click="fetchData"
                           :container-class="'paginate-container'"
