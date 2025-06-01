@@ -37,25 +37,25 @@ const fetchCategories = async () => {
   }
 };
 
-const fetchProductByCategoryID = async (categoryId, pageNumber) => {
-    if(token){
-      const page = pagination.value.currentPage ||  pageNumber;
-      Api.defaults.headers.common['Authorization'] = token;
-      await Api.get(`/api/products-by-category/${categoryId}?page=${page}&limit=9`)
-          .then(response=>{
-            products.value = response.data.data;
-            pagination.value={
-              currentPage: response.data.pagination.currentPage,
-              perPage: response.data.pagination.perPage,
-              total: response.data.pagination.total
-            };
-          });
-    }
+const fetchProductByCategoryID = async (categoryId: number, pageNumber?: number) => {
+  if(token){
+    const page = pageNumber || pagination.value.currentPage || 1;
+    Api.defaults.headers.common['Authorization'] = token;
+    await Api.get(`/api/products-by-category/${categoryId}?page=${page}&limit=9`)
+        .then(response=>{
+          products.value = response.data.data;
+          pagination.value={
+            currentPage: response.data.pagination.currentPage,
+            perPage: response.data.pagination.perPage,
+            total: response.data.pagination.total
+          };
+        });
+  }
 };
 
-const fetchProducts = async (pageNumber) => {
+const fetchProducts = async (pageNumber?: number) => {
   if(token){
-    const page =  pagination.value.currentPage || pageNumber;
+    const page = pageNumber || pagination.value.currentPage || 1;
     Api.defaults.headers.Authorization = token;
 
     await Api.get(`/api/products?page=${page}&limit=9`)
@@ -69,7 +69,6 @@ const fetchProducts = async (pageNumber) => {
         });
   }
 };
-
 const fetchProductByBarcode = async (title: string) => {
   if(token){
     Api.defaults.headers.common["Authorization"] = token;
@@ -130,7 +129,13 @@ onMounted(() => {
           />
         </div>
       </form>
-      <CategoryList :categories="categories" :fetchProducts="fetchProducts" :fetchProductByCategoryID="fetchProductByCategoryID" @update:currentCategoryId="(newId) => currentCategoryId = newId"/>
+      <CategoryList
+          :categories="categories"
+          :fetchProducts="fetchProducts"
+          :fetchProductByCategoryID="fetchProductByCategoryID"
+          :currentCategoryId="currentCategoryId"
+          @update:currentCategoryId="(newId) => currentCategoryId = newId"
+      />
       <ProductList :products="products" :fetchCarts="fetchCarts" />
     </div>
     <div class="w-full flex justify-center ">
