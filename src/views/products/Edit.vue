@@ -170,15 +170,15 @@ const updateProduct = async () => {
                 {{ errors.category }}
               </div>
             </div>
-            <div class="flex flex-col gap-2 items-start w-full">
-              <label for="stock" class="text-right">
-                Stok
-              </label>
-              <input id="stock" placeholder="Masukan Stock" v-model="stock" class="bg-white shadow-sm border border-b-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-b-blue-500 block w-full p-2.5" />
-              <div v-if="errors.stock" class="mt-2 text-sm text-red-600">
-                {{ errors.stock }}
-              </div>
-            </div>
+<!--            <div class="flex flex-col gap-2 items-start w-full">-->
+<!--              <label for="stock" class="text-right">-->
+<!--                Stok-->
+<!--              </label>-->
+<!--              <input disabled id="stock" placeholder="Masukan Stock" v-model="stock" class="bg-white shadow-sm border border-b-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-b-blue-500 block w-full p-2.5" />-->
+<!--              <div v-if="errors.stock" class="mt-2 text-sm text-red-600">-->
+<!--                {{ errors.stock }}-->
+<!--              </div>-->
+<!--            </div>-->
           </div>
           <div class="w-full">
             <div class="flex flex-col gap-2 items-start w-full">
@@ -192,15 +192,15 @@ const updateProduct = async () => {
             </div>
           </div>
           <div class="flex gap-2 items-center w-full">
-            <div class="flex flex-col items-start gap-2 w-full">
-              <label for="buy_price" class="text-right">
-                Harga Beli
-              </label>
-              <input id="buy_price" placeholder="Masukan Harga Beli" v-model="buyPrice" class="bg-white shadow-sm border border-b-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-b-blue-500 block w-full p-2.5" />
-              <div v-if="errors.buy_price" class="mt-2 text-sm text-red-600">
-                {{ errors.buy_price }}
-              </div>
-            </div>
+<!--            <div class="flex flex-col items-start gap-2 w-full">-->
+<!--              <label for="buy_price" class="text-right">-->
+<!--                Harga Beli-->
+<!--              </label>-->
+<!--              <input id="buy_price" placeholder="Masukan Harga Beli" v-model="buyPrice" class="bg-white shadow-sm border border-b-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-b-blue-500 block w-full p-2.5" />-->
+<!--              <div v-if="errors.buy_price" class="mt-2 text-sm text-red-600">-->
+<!--                {{ errors.buy_price }}-->
+<!--              </div>-->
+<!--            </div>-->
             <div class="flex flex-col gap-2 items-start w-full">
               <label for="sell_price" class="text-right">
                 Harga Jual

@@ -127,6 +127,11 @@ const handleKeyDown = (e)=>{
       </Table>
     </div>
 
+    <div class="flex flex-col justify-between mt-6">
+      <p class="text-red-500 text-sc">Catatan: Untuk menambah Stok dan Harga beli silahkan akses menu <b>Pembelian Stok Barang</b> </p>
+
+    </div>
+
     <div class="text-end">
       <VueAwesomePaginate :total-items="pagination.total" :items-per-page="pagination.perPage" :max-pages-shown="2" v-model="pagination.currentPage" @click="fetchData"
                           :container-class="'paginate-container'"

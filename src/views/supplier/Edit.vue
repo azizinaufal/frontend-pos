@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/dialog";
 
 const props = defineProps({
-  customerId:Number,
+  supplierId:Number,
   fetchData:Function
 });
 
@@ -26,31 +26,31 @@ const errors = ref <Record<string, string>>({});
 
 const token = Cookies.get('token');
 
-const fetchCustomer = async () => {
-  if(props.customerId){
+const fetchSupplier = async () => {
+  if(props.supplierId) {
     try {
       Api.defaults.headers.common['Authorization'] = token;
-      const response = await Api.get(`/api/customers/${props.customerId}`);
-      const customer = response.data.data;
-      name.value = customer.name
-      address.value = customer.address
-      noTelp.value = customer.no_telp
+      const response = await Api.get(`/api/suppliers/${props.supplierId}`);
+      const suppliers = response.data.data;
+      name.value = suppliers.name
+      noTelp.value = suppliers.no_telp
+      address.value = suppliers.address
     }catch(error){
-      console.log("Gagal fetch data customer", error)
+      console.log("Gagal fetch data Suppliers", error)
     }
   }
 };
 
 onMounted(() => {
-  fetchCustomer();
+  fetchSupplier();
 });
 
-const updateCustomer = async () => {
+const updateSupplier = async () => {
   Api.defaults.headers.common['Authorization'] = token;
-  await Api.put(`/api/customers/${props.customerId}`, {
+  await Api.put(`/api/suppliers/${props.supplierId}`, {
     name: name.value,
-    address: address.value,
     no_telp: noTelp.value,
+    address: address.value,
   })
       .then((response) => {
         toast(`${response.data.meta.message}`,{
@@ -71,18 +71,18 @@ const updateCustomer = async () => {
       Edit
     </DialogTrigger>
     <DialogContent >
-      <form @submit.prevent="updateCustomer">
+      <form @submit.prevent="updateSupplier">
         <DialogHeader>
-          <DialogTitle>Edit Pelanggan</DialogTitle>
+          <DialogTitle>Edit Supplier</DialogTitle>
           <DialogDescription></DialogDescription>
         </DialogHeader>
         <div class="flex flex-col gap-3 my-4">
 
           <div class="flex flex-col items-start gap-2 w-full">
             <label for="barcode" class="text-right">
-              Nama Pelanggan
+              Nama Supplier
             </label>
-            <input id="name" placeholder="Masukan Nama Pelanggan" v-model="name" class="bg-white shadow-sm border border-b-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-b-blue-500 block w-full p-2.5" />
+            <input id="name" placeholder="Masukan Nama Supplier" v-model="name" class="bg-white shadow-sm border border-b-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-b-blue-500 block w-full p-2.5" />
             <div v-if="errors.name" class="mt-2 text-sm text-red-600">
               {{ errors.name }}
             </div>
@@ -104,7 +104,7 @@ const updateCustomer = async () => {
             <label for="address" class="text-right">
               Alamat Pelanggan
             </label>
-            <textarea id="address" placeholder="Masukan Alamat Pelanggan" v-model="address" class="bg-white shadow-sm border border-b-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-b-blue-500 block w-full p-2.5" />
+            <textarea id="address" placeholder="Masukan Alama Supplier" v-model="address" class="bg-white shadow-sm border border-b-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-b-blue-500 block w-full p-2.5" />
             <div v-if="errors.address" class="mt-2 text-sm text-red-600">
               {{ errors.address }}
             </div>

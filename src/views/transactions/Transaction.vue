@@ -72,7 +72,6 @@ const fetchProducts = async (pageNumber?: number) => {
 const fetchProductByBarcode = async (title: string) => {
   if(token){
     Api.defaults.headers.common["Authorization"] = token;
-
     await Api.post(`/api/products-by-barcode`, {title})
     .then((response)=>{
       products.value = response.data.data;

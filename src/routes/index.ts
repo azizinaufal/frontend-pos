@@ -1,24 +1,12 @@
 import {createRouter,createWebHistory,type RouteRecordRaw} from "vue-router";
 import {useUser} from "../stores/user.ts";
-import Index from '@/views/LandingPage/Index.vue';
-import Register from '@/views/auth/Register.vue';
-import Login from '@/views/auth/Login.vue';
-import DashboardLayout from '@/views/dashboard/DashboardLayout.vue';
-import Dashboard from '@/views/dashboard/Index.vue';
-import Categories from '@/views/categories/Categories.vue';
-import Products from '@/views/products/Product.vue';
-import Customers from '@/views/customers/Customer.vue';
-import Profils from '@/views/profil/Profil.vue';
-import Transactions from '@/views/transactions/Transaction.vue';
-import Print from '@/views/transactions/print/Print.vue';
-import Sales from '@/views/sales/Sales.vue';
-import Profits from '@/views/profits/Profits.vue';
+
 
 const routes:RouteRecordRaw[] =[
     {
         path:'/',
         name:'index',
-        component:Index,
+        component:()=>import('../views/LandingPage/Index.vue'),
     },
     {
         path:'/login',
@@ -26,17 +14,17 @@ const routes:RouteRecordRaw[] =[
             useUser().getToken ? next('/dashboard') : next()
         },
         name:'login',
-        component: Login,
+        component: ()=>import('../views/auth/Login.vue'),
     },
     {
         path:'/register',
         name:'register',
-        component:Register,
+        component:()=>import('../views/auth/Register.vue'),
     },
     {
         path:'/dashboard',
         name:'dashboard',
-        component: DashboardLayout,
+        component: ()=>import('../views/dashboard/DashboardLayout.vue'),
         beforeEnter: (_to,_before,next) => {
             useUser().getToken ? next() : next('/')
         },
@@ -44,47 +32,62 @@ const routes:RouteRecordRaw[] =[
             {
                 path:'',
                 name:'/dashboard.index',
-                component:Dashboard,
+                component:()=>import('../views/dashboard/Index.vue'),
             },
             {
                 path:'/categories',
                 name:'categories.index',
-                component:Categories,
+                component:()=>import('../views/categories/Categories.vue'),
             },
             {
                 path:'/products',
                 name:'products.index',
-                component:Products,
+                component:()=>import('../views/products/Product.vue'),
             },
             {
                 path:'/customers',
                 name:'customer.index',
-                component:Customers,
+                component:()=>import('../views/customers/Customer.vue'),
+            },
+            {
+                path:'/suppliers',
+                name:'supplier.index',
+                component:()=>import('../views/supplier/Supplier.vue'),
             },
             {
                 path:'/users',
                 name:'user.index',
-                component:Profils,
+                component:()=>import('../views/profil/Profil.vue'),
             },
             {
                 path:'/transactions',
                 name:'transaction.index',
-                component:Transactions,
+                component:()=>import('../views/transactions/Transaction.vue'),
+            },
+            {
+                path:'/debit',
+                name:'debit.index',
+                component:()=>import('../views/debit/Debit.vue'),
             },
             {
                 path:'/transactions/print',
                 name:'transaction.print',
-                component:Print,
+                component:()=>import('../views/transactions/print/Print.vue'),
             },
             {
                 path:'/sales',
                 name:'sales.index',
-                component:Sales,
+                component:()=>import('../views/sales/Sales.vue'),
             },
             {
                 path:'/profits',
                 name:'profit.index',
-                component:Profits,
+                component:()=>import('../views/profits/Profits.vue'),
+            },
+            {
+                path:'/debit-report',
+                name:'debitreport.index',
+                component:()=>import('../views/DebitReport/DebitReport.vue'),
             },
         ],
 

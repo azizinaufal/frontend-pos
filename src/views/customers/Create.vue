@@ -96,7 +96,7 @@ const storeCustomer = async () => {
             <label for="address" class="text-right">
               Alamat Pelanggan
             </label>
-            <textarea id="address" placeholder="Masukan Nama Produk" v-model="address" class="bg-white shadow-sm border border-b-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-b-blue-500 block w-full p-2.5" />
+            <textarea id="address" placeholder="Masukan Alamat Customer" v-model="address" class="bg-white shadow-sm border border-b-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-b-blue-500 block w-full p-2.5" />
             <div v-if="errors.address" class="mt-2 text-sm text-red-600">
               {{ errors.address }}
             </div>

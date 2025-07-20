@@ -33,7 +33,12 @@ const addToCart = (product) => {
             dangerouslyHTMLString:true
           });
           props.fetchCarts();
-        });
+        })
+        .catch((error) => {
+          toast(error.response.data.meta.message,{
+            type: 'error',
+          });
+        })
   }
 };
 

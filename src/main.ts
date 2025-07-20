@@ -7,7 +7,6 @@ import VueApexCharts from 'vue3-apexcharts';
 import VueAwesomePaginate from "vue-awesome-paginate";
 import "vue-awesome-paginate/dist/style.css";
 
-
 const pinia =createPinia();
 
 const app = createApp(App);

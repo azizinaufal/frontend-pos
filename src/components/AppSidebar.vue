@@ -10,7 +10,7 @@ import {
   ClipboardPlus,
   BadgeDollarSign,
   BadgePercent,
-  UserRoundPen
+  UserRoundPen,ShoppingCart,ClipboardPen,ClipboardCopy, Users
 } from "lucide-vue-next";
 import {
   Sidebar,
@@ -77,11 +77,28 @@ const data = {
       ],
     },
     {
-      icon: BanknoteArrowUp,
-      title: 'TRANSACTIOS',
-      url: '/transactions',
+      icon: Users  ,
+      title: 'SUPPLIER',
+      url: '/suppliers',
       items: [
 
+      ],
+    },
+    {
+      icon: BanknoteArrowUp,
+      title: 'TRANSACTIOS',
+      url: '#',
+      items: [
+        {
+          icon: ShoppingCart,
+          title: 'Penjualan ',
+          url: '/transactions',
+        },
+        {
+          icon: ClipboardPen,
+          title: 'Pembelian Stok Barang ',
+          url: '/debit',
+        }
       ],
     },
     {
@@ -98,6 +115,11 @@ const data = {
           icon: BadgePercent,
           title: 'Profits',
           url: '/profits',
+        },
+        {
+          icon: ClipboardCopy,
+          title: 'Belanja Stok',
+          url: '/debit-report',
         },
       ],
 
